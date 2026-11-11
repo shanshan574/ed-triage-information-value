@@ -1,0 +1,279 @@
+{
+  "frozen_at_utc": "2026-10-28T04:50:33.655918+00:00",
+  "status": "post-result methodological revision; NOT prospective preregistration",
+  "prior_results_seen": true,
+  "external_validation": false,
+  "revision_history": "Initial revision runs archived in results_revision_initial after discovery of 13 contradictory death-before-arrival records; initial robustness results seen, no feature/model selection changed.",
+  "primary_outcome": "24h ICU entry (any episode) or timed hospital death; ED departure proxy only when recorded death time absent",
+  "uncertain_ed_death": "Exclude indeterminate 24h endpoints AND recorded death before arrival from all fitting/evaluation frames. Departure proxy is an upper bound, not an exact death timestamp.",
+  "frames": {
+    "A": "Original patient split; refit using train+val, test already examined in v2",
+    "T": "Reconstructed lower year <2017 development; >=2017 test; exclude development patients from test",
+    "G": "Reconstructed upper year <2017 development; lower year >=2017 test; exclude development patients from test; omit ambiguous years"
+  },
+  "models": {
+    "M0": [
+      "esi"
+    ],
+    "M1": [
+      "esi",
+      "age_at_visit",
+      "gender",
+      "arrival_transport"
+    ],
+    "M1time": [
+      "esi",
+      "age_at_visit",
+      "gender",
+      "arrival_transport",
+      "hour_of_day"
+    ],
+    "M2values": [
+      "esi",
+      "age_at_visit",
+      "gender",
+      "arrival_transport",
+      "hour_of_day",
+      "temperature_c",
+      "heartrate",
+      "resprate",
+      "o2sat",
+      "sbp",
+      "dbp",
+      "pain"
+    ],
+    "M2": [
+      "esi",
+      "age_at_visit",
+      "gender",
+      "arrival_transport",
+      "hour_of_day",
+      "temperature_c",
+      "heartrate",
+      "resprate",
+      "o2sat",
+      "sbp",
+      "dbp",
+      "pain",
+      "temperature_c_miss",
+      "heartrate_miss",
+      "resprate_miss",
+      "o2sat_miss",
+      "sbp_miss",
+      "dbp_miss",
+      "pain_miss"
+    ],
+    "M3a": [
+      "esi",
+      "age_at_visit",
+      "gender",
+      "arrival_transport",
+      "hour_of_day",
+      "temperature_c",
+      "heartrate",
+      "resprate",
+      "o2sat",
+      "sbp",
+      "dbp",
+      "pain",
+      "temperature_c_miss",
+      "heartrate_miss",
+      "resprate_miss",
+      "o2sat_miss",
+      "sbp_miss",
+      "dbp_miss",
+      "pain_miss",
+      "text"
+    ],
+    "M3b": [
+      "esi",
+      "age_at_visit",
+      "gender",
+      "arrival_transport",
+      "hour_of_day",
+      "temperature_c",
+      "heartrate",
+      "resprate",
+      "o2sat",
+      "sbp",
+      "dbp",
+      "pain",
+      "temperature_c_miss",
+      "heartrate_miss",
+      "resprate_miss",
+      "o2sat_miss",
+      "sbp_miss",
+      "dbp_miss",
+      "pain_miss",
+      "cc_group"
+    ],
+    "M4": [
+      "esi",
+      "age_at_visit",
+      "gender",
+      "arrival_transport",
+      "hour_of_day",
+      "temperature_c",
+      "heartrate",
+      "resprate",
+      "o2sat",
+      "sbp",
+      "dbp",
+      "pain",
+      "temperature_c_miss",
+      "heartrate_miss",
+      "resprate_miss",
+      "o2sat_miss",
+      "sbp_miss",
+      "dbp_miss",
+      "pain_miss",
+      "text",
+      "n_ed_365d",
+      "n_adm_365d",
+      "prior_icu_any"
+    ],
+    "M2noESI": [
+      "age_at_visit",
+      "gender",
+      "arrival_transport",
+      "hour_of_day",
+      "temperature_c",
+      "heartrate",
+      "resprate",
+      "o2sat",
+      "sbp",
+      "dbp",
+      "pain",
+      "temperature_c_miss",
+      "heartrate_miss",
+      "resprate_miss",
+      "o2sat_miss",
+      "sbp_miss",
+      "dbp_miss",
+      "pain_miss"
+    ],
+    "M3anoESI": [
+      "age_at_visit",
+      "gender",
+      "arrival_transport",
+      "hour_of_day",
+      "temperature_c",
+      "heartrate",
+      "resprate",
+      "o2sat",
+      "sbp",
+      "dbp",
+      "pain",
+      "temperature_c_miss",
+      "heartrate_miss",
+      "resprate_miss",
+      "o2sat_miss",
+      "sbp_miss",
+      "dbp_miss",
+      "pain_miss",
+      "text"
+    ]
+  },
+  "algorithm": "L2 logistic regression, natural cubic splines, train-fold standardization",
+  "knots": [
+    0.05,
+    0.35,
+    0.65,
+    0.95
+  ],
+  "duplicate_knots": "use unique knots; <3 -> linear",
+  "cv": "5 patient-grouped folds within development; all imputation, spline, scaling and PCA fit inside each fold",
+  "C_grid": [
+    0.001,
+    0.002848035868435802,
+    0.008111308307896872,
+    0.02310129700083159,
+    0.0657933224657568,
+    0.1873817422860383,
+    0.5336699231206307,
+    1.5199110829529332,
+    4.328761281083057,
+    12.32846739442066,
+    35.11191734215127,
+    100.0
+  ],
+  "solver": "lbfgs",
+  "tol": 1e-06,
+  "max_iter": 3000,
+  "optimizer_path": "warm-start C path inside each fold; solver tolerance unchanged",
+  "text": "Frozen existing embeddings with provenance limitations; fold-local PCA32. Existing rules are reused, not independently validated.",
+  "bootstrap": {
+    "B": 2000,
+    "seed": 20261028,
+    "unit": "patient",
+    "paired": true,
+    "uncertainty": "conditional on fitted models; no model refit per bootstrap"
+  },
+  "comparisons": [
+    [
+      "M3a",
+      "M1"
+    ],
+    [
+      "M1time",
+      "M1"
+    ],
+    [
+      "M2values",
+      "M1time"
+    ],
+    [
+      "M2",
+      "M2values"
+    ],
+    [
+      "M2",
+      "M1time"
+    ],
+    [
+      "M3a",
+      "M2"
+    ],
+    [
+      "M3b",
+      "M2"
+    ],
+    [
+      "M4",
+      "M3a"
+    ],
+    [
+      "M2",
+      "M2noESI"
+    ],
+    [
+      "M3a",
+      "M3anoESI"
+    ]
+  ],
+  "inference": "Estimates and paired percentile 95% intervals; exploratory, no confirmatory p-value claims",
+  "clinical": "ESI3; fixed 5% and 10% alert budgets; paired cluster bootstrap reranks each sample with fractional randomized tie allocation. Retrospective ranking policy, not prospectively fixed risk cutoffs.",
+  "source_sha256": {
+    "src/wjem_ed_revision/__init__.py": "f4259719dd022ec7e143d389e3385985d59613ac931437b2f1476c7708f300d9",
+    "src/wjem_ed_revision/data.py": "92de2d182fb604c0fa8c605cb1ecda5e10c6b47ff2c4fe7e65d0961839fb7bd2",
+    "src/wjem_ed_revision/evaluate.py": "56e84dc6331476e91d3885135428658eb581b3577e3cd2cbb4b2baf05b326adf",
+    "src/wjem_ed_revision/model.py": "18c5b0b84cfae75d282c8c66d72c23b72411addd43b3159bb4bb871c6a359fd3",
+    "src/wjem_ed_revision/report.py": "f059f664d22c059c192766ed7b76c9d9a48d4457ffd1b15a8d2b78b28c1ef308",
+    "src/wjem_ed_revision/run.py": "94caee59039e41ff812aeea720884343dfa9daefed935a6c489d7d4e902e1041",
+    "src/wjem_ed_v2/text.py": "886118609cf692f4749d5bcf7a9cfae442bb0ebd6ef9573235738935ea161303",
+    "src/wjem_ed_v2/models.py": "94eeffcc7fc12c8a78d3c7a3e2d802ca0116c2026133f2f3764fc14e8c5a5b16",
+    "src/wjem_ed_v2/evaluate.py": "163a9312a32115dae33b8b123492b6205592f66cce4999b95049b97ae9df9151"
+  },
+  "inputs": {
+    "data/cache_v2/cohort.parquet": "75ce6d4130877cd2565495941ace0e741bc2a92c1eb5b14699d7886e255564dc",
+    "data/mimic-iv-2.2/icu/icustays.csv.gz": "b7d37536d4ce6f68feb3c5a89068bec34c5f03a573162df02bd57aec53b87c7d",
+    "data/cache_real/text_emb.parquet": "5794427344773ecc2954f1a10f8433d5aad8e6f44b60779b55728729ab61f95e",
+    "data/cache_v2/text_rules.parquet": "4c2fb82ab75b337211c9caa5bef7775d34f30b1b0151ea7de98f9f2d6ce2cd34"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.1.0",
+    "pandas": "2.3.3",
+    "sklearn": "1.7.2"
+  }
+}

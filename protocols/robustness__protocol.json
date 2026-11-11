@@ -1,0 +1,45 @@
+{
+  "frozen_at_utc": "2026-10-28T04:50:45.401303+00:00",
+  "status": "post-result robustness amendment; exploratory",
+  "models": [
+    "M1time",
+    "M2",
+    "M3b",
+    "M2noESI"
+  ],
+  "frames": [
+    "A",
+    "G"
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "fixed_parameters": {
+    "objective": "binary",
+    "n_estimators": 500,
+    "num_leaves": 31,
+    "learning_rate": 0.05,
+    "min_child_samples": 50,
+    "subsample": 0.9,
+    "subsample_freq": 1,
+    "colsample_bytree": 1.0,
+    "reg_lambda": 1.0,
+    "n_jobs": 4,
+    "verbosity": -1,
+    "deterministic": true,
+    "force_col_wise": true
+  },
+  "tuning": "none; parameters fixed before this robustness fit; no test-set choice",
+  "estimand": "AUROC increments using mean predicted probabilities over seeds",
+  "bootstrap": {
+    "B": 2000,
+    "seed": 20261028,
+    "unit": "patient",
+    "paired": true
+  },
+  "source_sha256": "9644ee4299e049ef63ee25f2f886a4945d70580b07fd4d92fa6d8a28c58335ad",
+  "primary_protocol_sha256": "9364b7fd31e48a1762bc63064450af833b5a87d64576623ecf9f928e9a179076",
+  "lightgbm_version": "4.7.0"
+}

@@ -1,0 +1,44 @@
+{
+  "frozen_at_utc": "2026-10-28T04:50:45.421517+00:00",
+  "status": "post-result sensitivity amendment; not a prospective preregistration",
+  "frames": [
+    "A",
+    "G"
+  ],
+  "models": [
+    "M1time",
+    "M2",
+    "M3b",
+    "M2noESI"
+  ],
+  "tasks": [
+    "critical12",
+    "recorded_mortality"
+  ],
+  "C_grid": [
+    0.001,
+    0.002848035868435802,
+    0.008111308307896872,
+    0.02310129700083159,
+    0.0657933224657568,
+    0.1873817422860383,
+    0.5336699231206307,
+    1.5199110829529332,
+    4.328761281083057,
+    12.32846739442066,
+    35.11191734215127,
+    100.0
+  ],
+  "cv": "5 patient-grouped folds, fold-local preprocessing, warm-start regularization path; 1e-6 tolerance",
+  "critical12": "Corrected 12h ICU/death composite; exclude uncertain 12h death timing. Inherit primary frame memberships.",
+  "recorded_mortality": "ED expired disposition OR linked hospital_expire_flag=1; no time window; not out-of-hospital death ascertainment.",
+  "interpretation": "Mortality avoids ICU-entry-as-decision but remains affected by treatment and ascertainment; not a causal control.",
+  "bootstrap": {
+    "B": 2000,
+    "seed": 20261028,
+    "unit": "patient",
+    "paired": true
+  },
+  "source_sha256": "dc79ebfa27f5c733000a61dffbc0a3541318545efe6cbba4111678c7cbefe1a7",
+  "primary_protocol_sha256": "9364b7fd31e48a1762bc63064450af833b5a87d64576623ecf9f928e9a179076"
+}

@@ -1,0 +1,110 @@
+{
+  "frozen_at_utc": "2026-10-30T04:41:57.291137+00:00",
+  "status": "Post-result diagnostic uncertainty amendment; not prospective preregistration.",
+  "prior_results_seen": "Primary model discrimination, calibration point estimates and other amendments have been inspected. These 15 model calibration bootstrap intervals have not been computed before this freeze.",
+  "objective": "Complete uncertainty reporting for all 15 primary model rows already listed in the manuscript; no selection based on new calibration results.",
+  "frames": [
+    "A",
+    "T",
+    "G"
+  ],
+  "models": [
+    "M1",
+    "M2",
+    "M3a",
+    "M3b",
+    "M2noESI"
+  ],
+  "populations": {
+    "A": {
+      "encounters": 84171,
+      "patients": 40994,
+      "events": 5543
+    },
+    "T": {
+      "encounters": 84750,
+      "patients": 62249,
+      "events": 6812
+    },
+    "G": {
+      "encounters": 89301,
+      "patients": 64343,
+      "events": 7133
+    }
+  },
+  "bootstrap": {
+    "B": 2000,
+    "seed": 20261028,
+    "unit": "patient",
+    "algorithm": "Sort prediction rows by stay_id, np.unique(subject_id, return_inverse=True); rng=np.random.default_rng(seed); each draw uses np.bincount(rng.integers(n_unique,size=n_unique),minlength=n_unique), mapped to encounters.",
+    "paired": "Each model replays the same frame-specific patient multiplicity sequence. This matches the frozen primary evaluator.",
+    "interval": "2.5th and 97.5th percentiles of finite estimates; all convergence/failure counts reported.",
+    "conditional_on_fixed_fitted_models": true,
+    "not_included": "Model-development variability, adaptive analysis selection, and uncertainty from data ascertainment."
+  },
+  "diagnostics": {
+    "probability_clip": 1e-06,
+    "fields": [
+      "calibration_in_the_large",
+      "joint_intercept",
+      "calibration_slope"
+    ],
+    "calibration_in_the_large": "Offset logistic regression with slope fixed at one; ideal intercept zero.",
+    "joint_intercept_and_slope": "Logistic diagnostic regression on prediction logit; ideal intercept zero and slope one.",
+    "implementation": "Reuse the checked external WeightedCalibration after pre-clipping inputs to the frozen primary 1e-6 rule. Its internal wider 1e-8 clipping does not change these inputs.",
+    "prediction_updates": false,
+    "new_model_training": false,
+    "point_estimate_preservation": "Original metrics.csv remains unchanged; reproduce its offset intercept and joint slope within 1e-7."
+  },
+  "inference": "Exploratory pointwise 95% intervals, without multiplicity adjustment. Diagnostic fits are not applied to predictions.",
+  "validation": {
+    "original_point_tolerance": 1e-07,
+    "independent_optimizer_tolerance": 1e-06,
+    "independent_scipy": "Uncentered BFGS weighted Bernoulli likelihood with analytic gradient; normalized score norm <=1e-8.",
+    "weighted_replicates": [
+      0,
+      917,
+      1999
+    ],
+    "paired_draw_check": "First three encounter-weight arrays checked against the original frozen cluster_weights function; full multiplicity-stream hashes agree across models within frame.",
+    "percentile_recalculation": "Recompute intervals and finite counts from each stored bootstrap array."
+  },
+  "resource_limits": {
+    "default_process_workers": 12,
+    "maximum_process_workers": 12,
+    "BLAS_threads_per_worker": 1
+  },
+  "primary_protocol_sha256": "9364b7fd31e48a1762bc63064450af833b5a87d64576623ecf9f928e9a179076",
+  "input_sha256": {
+    "results_revision/protocol.json": "9364b7fd31e48a1762bc63064450af833b5a87d64576623ecf9f928e9a179076",
+    "results_revision/metrics.csv": "c9bc1ed803cc6dede33ca070823880fe934657625fbc23b53f3187ed7439eab8",
+    "results_revision/preds/A_M1.parquet": "702503aad934e1382c4d936193b3d1a8bcc57098c9ad8402ff91d1b1c352c1ea",
+    "results_revision/preds/A_M2.parquet": "788bf596e19d49768aeefc1be38e688f9d3ea428e6773f1457dd79118a1d64dd",
+    "results_revision/preds/A_M3a.parquet": "29c6d8620cd6f56492f3b46f46eaf23072f078eb1a53934f756508bce27aeb50",
+    "results_revision/preds/A_M3b.parquet": "dcec6a16935583a12ecd050dd59a74152ec613a043034d705d3f426283e06b61",
+    "results_revision/preds/A_M2noESI.parquet": "3bf53edaae94fef774106ddcdc45b2b3d2658a010d95cf438fa07fedb087c3bb",
+    "results_revision/preds/T_M1.parquet": "a04597f2d842072ed69365c253b9c357a6c0c1478846d99b8c2273501e3fe2c2",
+    "results_revision/preds/T_M2.parquet": "0033a8081296179d5df7ee157f7f4be1c262bdccbfa99254352957ec5f69bb14",
+    "results_revision/preds/T_M3a.parquet": "01827fc07748a2c2c6e6697acd8caee2603e037005bfe396932e03af5d24d591",
+    "results_revision/preds/T_M3b.parquet": "da686bb2fb1ba50ff479c87815651605e9a2ac82060fbcd1cdf168ce7fad02c5",
+    "results_revision/preds/T_M2noESI.parquet": "1fd38afd23823f4e112954630f6a64c9b5e588df20c77e8d41013e4302817be0",
+    "results_revision/preds/G_M1.parquet": "115216ef8d07f91dc2e893a2f7b119023a74e488798de6f54f08fd7beb126f9a",
+    "results_revision/preds/G_M2.parquet": "5f54d7c53179e2b178d62a9f58d21fba95a115402ccd93f409bc0ed5c713f8cb",
+    "results_revision/preds/G_M3a.parquet": "19d0bd477c19fa3c1a41501f5e789eae652af3d3321b69eeb7dca56693c9ab25",
+    "results_revision/preds/G_M3b.parquet": "19764de2c32e6913ecb954849b4e1265f2638285fd935cb582e25544bb94ae6d",
+    "results_revision/preds/G_M2noESI.parquet": "8248571a255f7c789cf36ec4bc1a56b984c849027898b57d84f5c28e2b84b4d7"
+  },
+  "source_sha256": {
+    "scripts/primary_calibration_uncertainty.py": "e4a0bde75939ae3649a61f0c5bb9cfc8e3f312c8eef89a6f5d48f7ef16658ff9",
+    "scripts/evaluate_mcmed_external.py": "fb2a22c7d19d6ed810cdc47b93e42958a156cc1d632467847f02a5bc1873d531",
+    "src/wjem_ed_revision/evaluate.py": "56e84dc6331476e91d3885135428658eb581b3577e3cd2cbb4b2baf05b326adf",
+    "src/wjem_ed_v2/evaluate.py": "163a9312a32115dae33b8b123492b6205592f66cce4999b95049b97ae9df9151",
+    "tests/test_primary_calibration_uncertainty.py": "bc93c1db9e339400343dc47402857e64d90a8f91be3e8249c1abada3ede659af"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.1.0",
+    "pandas": "2.3.3",
+    "scipy": "1.16.3"
+  }
+}

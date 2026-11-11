@@ -1,0 +1,16 @@
+{
+  "frozen_at_utc": "2026-10-28T04:57:57.550785+00:00",
+  "status": "exploratory clinical comparator amendment after initial robustness results",
+  "rule": "heart rate >100 OR respiratory rate >20 OR SpO2 <92",
+  "source": "https://www.govinfo.gov/content/pkg/GOVPUB-HE20_6500-PURL-gpo23161/pdf/GOVPUB-HE20_6500-PURL-gpo23161.pdf",
+  "source_page": "PDF page 112 (algorithm); adults",
+  "population": "ESI3 with all three rule variables observed; primary revision frame memberships",
+  "comparison": "M2 and M3a against rule at the exact same alert count; bootstrap recomputes rule count and model ranking",
+  "limits": "Only a threshold flag; not clinician adjudication, full ESI algorithm, or version 5 validation",
+  "bootstrap": {
+    "B": 2000,
+    "seed": 20261028,
+    "unit": "patient"
+  },
+  "source_sha256": "4279110f2b76b01912a2e1d0470a87581f2cce940e83937217b2cb4baac377d2"
+}

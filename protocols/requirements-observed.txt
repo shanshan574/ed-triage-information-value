@@ -1,0 +1,11 @@
+numpy==2.1.0
+pandas==2.3.3
+scipy==1.16.3
+scikit-learn==1.7.2
+lightgbm==4.7.0
+joblib==1.5.2
+threadpoolctl==3.6.0
+pyarrow==22.0.0
+matplotlib==3.10.7
+torch==2.10.0a0+b558c986e8.nv25.11
+transformers==5.17.0

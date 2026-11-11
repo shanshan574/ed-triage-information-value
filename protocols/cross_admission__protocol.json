@@ -1,0 +1,73 @@
+{
+  "frozen_at_utc": "2026-10-28T06:28:49.989764+00:00",
+  "status": "Exploratory post-review amendment; prior results and preliminary label audit seen",
+  "known_before_amendment": "Preliminary patient linkage found 47 eligible original negatives with recorded ICU entry in another admission within 24h; no corresponding new timed hospital deaths",
+  "analysis": "Fixed-model endpoint sensitivity; no retraining or new independent validation",
+  "primary_endpoint_unchanged": "ICU or hospital death linked to the index ED admission within 24h; original eligible ED death upper-bound proxies retained",
+  "sensitivity_endpoint": "Original positives OR any ICU entry OR recorded hospital death for the same subject_id in the inclusive 0-24h window after ED arrival, regardless of hadm_id",
+  "ascertainment_scope": "Events recorded within the available single-hospital database only; no ascertainment of other hospitals or unrecorded deaths",
+  "eligibility": "Original primary eligible encounters and original A/T/G memberships; 13 contradictory death chronologies and 4 indeterminate index death windows remain excluded",
+  "frame_estimand": "Original encounter populations; patient bootstrap accommodates repeated ED visits and events qualifying for multiple encounters",
+  "frames": [
+    "A",
+    "T",
+    "G"
+  ],
+  "models": [
+    "M1",
+    "M1time",
+    "M2",
+    "M3a"
+  ],
+  "comparisons": [
+    [
+      "M3a",
+      "M1"
+    ],
+    [
+      "M2",
+      "M1time"
+    ],
+    [
+      "M3a",
+      "M2"
+    ]
+  ],
+  "metrics": [
+    "auroc",
+    "auprc",
+    "brier"
+  ],
+  "clinical_utility": "ESI3, fixed 5% alert budget, fractional allocation at tied scores; unchanged model scores, reranked within each resample",
+  "bootstrap": {
+    "B": 2000,
+    "seed": 20261028,
+    "unit": "patient",
+    "paired_across_models_and_endpoints": true,
+    "interval": "pointwise percentile 95%",
+    "uncertainty": "conditional on original fitted models"
+  },
+  "interpretation": "Isolates sensitivity of performance estimates to label scope; models were trained on original labels and are not newly optimized for the expanded endpoint",
+  "source_and_input_sha256": {
+    "scripts/revision_cross_admission.py": "d36f6d0788bc18fa69e8e0943fe5d3093d484be3e46af8b25d81057f40a4cc3b",
+    "src/wjem_ed_revision/evaluate.py": "56e84dc6331476e91d3885135428658eb581b3577e3cd2cbb4b2baf05b326adf",
+    "src/wjem_ed_revision/data.py": "92de2d182fb604c0fa8c605cb1ecda5e10c6b47ff2c4fe7e65d0961839fb7bd2",
+    "tests/test_cross_admission.py": "51e03b015672108da97ce0ac324a4d28e67571e6c99919bf4d678dfce0b320a0",
+    "results_revision/protocol.json": "9364b7fd31e48a1762bc63064450af833b5a87d64576623ecf9f928e9a179076",
+    "results_revision/cohort.parquet": "2e829ad937f0716cc8732d7497b62f362c4b543ade4221ddda578317293a3c04",
+    "data/mimic-iv-2.2/icu/icustays.csv.gz": "b7d37536d4ce6f68feb3c5a89068bec34c5f03a573162df02bd57aec53b87c7d",
+    "data/mimic-iv-2.2/hosp/admissions.csv.gz": "a68685e2ce8742eb98ed9ed20c9f40a4f97549bbc27f330e2131a5aed37142a1",
+    "results_revision/preds/A_M1.parquet": "702503aad934e1382c4d936193b3d1a8bcc57098c9ad8402ff91d1b1c352c1ea",
+    "results_revision/preds/A_M1time.parquet": "c3a4a897a866a97324a6bf36fdc577d96bd0e8730a2e8b48ec21aa8b0c45ea9c",
+    "results_revision/preds/A_M2.parquet": "788bf596e19d49768aeefc1be38e688f9d3ea428e6773f1457dd79118a1d64dd",
+    "results_revision/preds/A_M3a.parquet": "29c6d8620cd6f56492f3b46f46eaf23072f078eb1a53934f756508bce27aeb50",
+    "results_revision/preds/T_M1.parquet": "a04597f2d842072ed69365c253b9c357a6c0c1478846d99b8c2273501e3fe2c2",
+    "results_revision/preds/T_M1time.parquet": "a77826165e8edeb867173e6319c62b29ec43e964efa510a52b98efaa91404711",
+    "results_revision/preds/T_M2.parquet": "0033a8081296179d5df7ee157f7f4be1c262bdccbfa99254352957ec5f69bb14",
+    "results_revision/preds/T_M3a.parquet": "01827fc07748a2c2c6e6697acd8caee2603e037005bfe396932e03af5d24d591",
+    "results_revision/preds/G_M1.parquet": "115216ef8d07f91dc2e893a2f7b119023a74e488798de6f54f08fd7beb126f9a",
+    "results_revision/preds/G_M1time.parquet": "5a62cc3dac2e13c8dd56fb46620a4f8615e1eb4c1dbe9257f19e8bf1cb4b6af0",
+    "results_revision/preds/G_M2.parquet": "5f54d7c53179e2b178d62a9f58d21fba95a115402ccd93f409bc0ed5c713f8cb",
+    "results_revision/preds/G_M3a.parquet": "19d0bd477c19fa3c1a41501f5e789eae652af3d3321b69eeb7dca56693c9ab25"
+  }
+}

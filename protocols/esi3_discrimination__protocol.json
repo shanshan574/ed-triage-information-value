@@ -1,0 +1,282 @@
+{
+  "frozen_at_utc": "2026-10-30T08:28:29.346749+00:00",
+  "status": "Exploratory post-result diagnostic added while writing the focused manuscript; NOT confirmatory or prospectively preregistered.",
+  "prior_results_seen": "All-ESI discrimination, ESI-3 utility, related-endpoint external results, missing-outcome bounds and calibration diagnostics have been examined. These within-ESI-3 discrimination estimates and new bootstrap intervals have not been computed before this freeze.",
+  "rationale": "Avoid conflating all-ESI discrimination with ESI-3 capture. Characterize discrimination in exactly the same ESI-3 populations as the existing utility results.",
+  "population": "Only stored test/external prediction encounters with ESI exactly3; missing ESI excluded from this stratum. Paired model membership, labels, original cohort test membership, and existing utility N/events/patient counts are checked.",
+  "frames": [
+    "A",
+    "T",
+    "G",
+    "internal",
+    "mcmed"
+  ],
+  "populations": {
+    "A": {
+      "encounters": 44248,
+      "patients": 25226,
+      "events": 561,
+      "utility_population_matches": true
+    },
+    "T": {
+      "encounters": 42637,
+      "patients": 34280,
+      "events": 543,
+      "utility_population_matches": true
+    },
+    "G": {
+      "encounters": 44942,
+      "patients": 35644,
+      "events": 576,
+      "utility_population_matches": true
+    },
+    "internal": {
+      "encounters": 44077,
+      "patients": 25120,
+      "events": 99,
+      "utility_population_matches": true
+    },
+    "mcmed": {
+      "encounters": 74951,
+      "patients": 49221,
+      "events": 214,
+      "utility_population_matches": true
+    }
+  },
+  "primary_models": [
+    "M1time",
+    "M2values",
+    "M2",
+    "M3a"
+  ],
+  "related_models": [
+    "X0",
+    "X1",
+    "X2",
+    "X3"
+  ],
+  "primary_comparisons": [
+    [
+      "M2values",
+      "M1time"
+    ],
+    [
+      "M2",
+      "M2values"
+    ],
+    [
+      "M3a",
+      "M2"
+    ],
+    [
+      "M2",
+      "M1time"
+    ]
+  ],
+  "related_comparisons": [
+    [
+      "X1",
+      "X0"
+    ],
+    [
+      "X2",
+      "X1"
+    ],
+    [
+      "X3",
+      "X2"
+    ],
+    [
+      "X2",
+      "X0"
+    ]
+  ],
+  "metrics": [
+    "auroc",
+    "auprc",
+    "brier"
+  ],
+  "score_transform": "None; use natural original probabilities without clipping.",
+  "bootstrap": {
+    "B": 2000,
+    "seed": 20261030,
+    "unit": "patient represented in the ESI-3 evaluation stratum",
+    "algorithm": "Sort encounters by stay_id; np.unique(subject_id,return_inverse=True). For each frame initialize default_rng(seed); draw n_unique patient indices with replacement, map multiplicity to all their ESI-3 encounters. All models share weights within each replicate.",
+    "conditional_on_fixed_models": true,
+    "interval": "Finite-estimate 2.5th/97.5th percentiles; paired differences from each common-weight draw.",
+    "degenerate_samples": "Empty total weight: all metrics NaN. One outcome class: AUROC and AP marked NaN by predeclared convention, while Brier remains defined. Valid/invalid counts reported separately for every metric and contrast.",
+    "old_utility": "Existing utility remains unchanged. Its original bootstrap seeds differ; this amendment does not claim joint bootstrap covariance or perform a formal discrimination-versus-capture or feature-superiority test."
+  },
+  "validation": {
+    "independent_reference": "sklearn roc_auc_score, average_precision_score and brier_score_loss with sample_weight",
+    "weighted_replicates": [
+      0,
+      917,
+      1999
+    ],
+    "absolute_tolerance": 1e-12,
+    "recompute_all_intervals_and_paired_differences_from_saved_arrays": true,
+    "replay_full_patient_multiplicity_stream": true
+  },
+  "restrictions": [
+    "No model refitting, recalibration, new labels, predictor change or threshold selection.",
+    "No recomputation of utility; only existing population alignment is checked.",
+    "Primary24h composite and separately developed recorded-mortality models remain distinct endpoints.",
+    "Intervals are exploratory and pointwise, with no multiplicity correction and no training or adaptive analysis-selection variability."
+  ],
+  "baseline_integrity": {
+    "frozen_source_files": 9,
+    "frozen_model_prediction_bundles": 30,
+    "external_source_files": 5,
+    "external_models": 4,
+    "external_prediction_files": 8
+  },
+  "input_sha256": {
+    "data/cache_real/text_emb.parquet": "5794427344773ecc2954f1a10f8433d5aad8e6f44b60779b55728729ab61f95e",
+    "data/cache_v2/cohort.parquet": "75ce6d4130877cd2565495941ace0e741bc2a92c1eb5b14699d7886e255564dc",
+    "data/cache_v2/text_rules.parquet": "4c2fb82ab75b337211c9caa5bef7775d34f30b1b0151ea7de98f9f2d6ce2cd34",
+    "data/mc_med_local/manifest.json": "f1ae742e0f859fe5dcbc84ce17cda7779e8a7a9e715e0d974e2f9c30af190553",
+    "data/mc_med_local/visits.csv": "9fea50d6ffc35affb827846cdfc4fc2f3bd23463a1d38192cb3de3c1e9552e86",
+    "data/mimic-iv-2.2/icu/icustays.csv.gz": "b7d37536d4ce6f68feb3c5a89068bec34c5f03a573162df02bd57aec53b87c7d",
+    "results_external_mcmed/clinical_utility.csv": "f258a76a4edba19cadc14c567176388d2f8a3d47221d00abe8e928662b6a7342",
+    "results_external_mcmed/cohorts/mcmed.parquet": "755d4874e1000127e3c7f43d9afce18c8c549a8d70c9c1e1202b305221de083c",
+    "results_external_mcmed/cohorts/source.parquet": "b091b630c5d54fd964697f3a0dbfe7cd26f33b2dd6a041bc72278b0fee325887",
+    "results_external_mcmed/embeddings/manifest.json": "dc730c377b7cb67b418e192898e8420887b11352d5eec5e2812202828739155a",
+    "results_external_mcmed/implementation_amendment.json": "00e16b4337cf3a2722fcbac9dd2003d677c628cb628b3c71d701ad9e75bc77fb",
+    "results_external_mcmed/models/X0.joblib": "1d339897692b472940724ba06245324f6932f739c4ff396aaeabd15e03f3dbe9",
+    "results_external_mcmed/models/X1.joblib": "e351caba0b0cbc15220718c8391b236c2f561b393338f9f5085e8746723b15c5",
+    "results_external_mcmed/models/X2.joblib": "45bc55dd8b74f1b5d104ed9ee851a5bbf5f9ac593c0f90d0be131c84c91b1a57",
+    "results_external_mcmed/models/X3.joblib": "d5205eb2fd1cab5ef2847d11cd31009bc47705be04c30de4f7de72677c520f58",
+    "results_external_mcmed/preds/internal_X0.parquet": "8fd1e19b32ef71b33bc34087dc1f3cab0b9aeee04d2f9fbdd9109d269ce534d3",
+    "results_external_mcmed/preds/internal_X1.parquet": "848f6ef231d2eb0fcc02c4185397eae148902ef136f5be95194d8d0715e1bb0e",
+    "results_external_mcmed/preds/internal_X2.parquet": "7dde46e91758f6213514d6575313fb2ba603fc998bdf22f731758635958f8cfb",
+    "results_external_mcmed/preds/internal_X3.parquet": "d0ca373764b5894c5ac29915ece7ef1b4112a41364e9df74d0153546e18eda6a",
+    "results_external_mcmed/preds/mcmed_X0.parquet": "a997e8f513ce6f18500b1e1b4ee7a3eb301ba46aa8ae3a54d770fbf9c57189d4",
+    "results_external_mcmed/preds/mcmed_X1.parquet": "278e69cda21c723b68092af9a4b86f96af6ab9ecfce7d206d90a30705979cd84",
+    "results_external_mcmed/preds/mcmed_X2.parquet": "2978e7df1d7e57a485aaa457b89d3e991f6bc5221ad94f935645cfc1624ad74d",
+    "results_external_mcmed/preds/mcmed_X3.parquet": "a4e886ce6d6cbeb806a5f664422c93d1c3582c7016987dbec506bbf3f140bb6f",
+    "results_external_mcmed/protocol.json": "86b627dbef4737f7749437b24c581d0d14fcdd076dcc5e227df91b54e9a1325c",
+    "results_external_mcmed/runs/X0.json": "19291d438364c39fffe0147483c41ba46563b8ff081f26b4626348872ada83b0",
+    "results_external_mcmed/runs/X1.json": "75a4c44470171db24a9c2b5b06569ff896dd76b30ed42321617b9dd3aa41bb84",
+    "results_external_mcmed/runs/X2.json": "53c337d90f98c5382be14045fa64da616a3f06661661866021561968313320d8",
+    "results_external_mcmed/runs/X3.json": "c49535b7b4767e41e26332831211400b025f0c151ea26a417d6118f38c8a4d45",
+    "results_revision/clinical_utility.csv": "c7d0cfa357ebfa6879a32cedeef70da96f86c7c2fc871dd233e10d09a87615ec",
+    "results_revision/cohort.parquet": "2e829ad937f0716cc8732d7497b62f362c4b543ade4221ddda578317293a3c04",
+    "results_revision/models/A_M0.joblib": "a6547d0ccba29e6bbe5fe9bce8c88fae19a077eae66fec542ad3078e7c0989e2",
+    "results_revision/models/A_M1.joblib": "7954ed66ca9e633b88f5e1bfc316c79e8e90fa3fcbe27ecf694acf1681aa1576",
+    "results_revision/models/A_M1time.joblib": "330acaabfd364df297eccad95db571bcd83d4199cac37337c8ed79da7a69935c",
+    "results_revision/models/A_M2.joblib": "48d99a734b032979691b814d8d8318000edc0a76cf592d9c22ea40eb890794ff",
+    "results_revision/models/A_M2noESI.joblib": "61475810364fbe7b63f710486dd164b6a20e784e742ec1a43e306c1ccd3020db",
+    "results_revision/models/A_M2values.joblib": "bcfc3cc5356142d3d2497efcdd0685ca79a1d316e1ecb234c754895797bf89ef",
+    "results_revision/models/A_M3a.joblib": "93934168f52402b6487b72471d22717b88c09592f7fd5582b7864a081bdc4a3e",
+    "results_revision/models/A_M3anoESI.joblib": "8b1d6c0047d58bdc2a2410e069342c0f8fc628f510bfee2fde5aa7c69e037125",
+    "results_revision/models/A_M3b.joblib": "b06ea326e8e3983e502413a1f88ec47e69c935073b4ff1971369778bd558c17b",
+    "results_revision/models/A_M4.joblib": "c276197b6e74c5f5a75ee2243f10718ef5111dd461ffd9dff2e035c97892ae01",
+    "results_revision/models/G_M0.joblib": "7c3563cf69bc6ba56063c5c036a0e4669444c6109ac8e2c5ba00083e27afd84d",
+    "results_revision/models/G_M1.joblib": "4c4875bb956da48bf7ee4ac778804301a11e39e24ebc436ecf4909d0382af3ca",
+    "results_revision/models/G_M1time.joblib": "ff4a693903db2565bf069e43c6432bfc91c5ba5e95b3f2312dbc03e2336db3cf",
+    "results_revision/models/G_M2.joblib": "c030cf625db62ff80b9bb93918dc650dc57ad420f7088fe63ca4efd08e871f7a",
+    "results_revision/models/G_M2noESI.joblib": "f4b6641041270ded6f736de9ad5767f1f1177daf5e019fce63844cb6905b18bf",
+    "results_revision/models/G_M2values.joblib": "6d9ff9cc752f5e0cb2be45bd3c6b8b58ada6544754c7d3e2a3756b70ca10ba89",
+    "results_revision/models/G_M3a.joblib": "7bafd891d10b1bd4f104579b4f945b642557aef950ee4ee808552b2aa6dbb53a",
+    "results_revision/models/G_M3anoESI.joblib": "6bb038df84b0e5b82557c8089767e38b0a8d2c3d4cf9a35ea44e81c86fba9943",
+    "results_revision/models/G_M3b.joblib": "ee4c92f5f183e79266786a293e509b9bdbddfc1fc2d1f7edf83b7e9631acc741",
+    "results_revision/models/G_M4.joblib": "d2f6b05f34d101c389461db127971863e63b265741f245357e69e9b7e152ef71",
+    "results_revision/models/T_M0.joblib": "8eeef7fd0b02bc84dac202f54a34479ce16b9677752e66f27026cb869d436f66",
+    "results_revision/models/T_M1.joblib": "a69ac3eb0e9019703779b3415740c7ad1c0b53656a1d383800f1f92bdef7318f",
+    "results_revision/models/T_M1time.joblib": "57a5d8f5911b2c8ab8e6eca201a1c8b17688b6af2bf155118f1b6e4c1c884c2c",
+    "results_revision/models/T_M2.joblib": "8aaf14fc94e2db23b3cba38f4e1f40cfbdf5546db492ad41a4bbae2d2991c09d",
+    "results_revision/models/T_M2noESI.joblib": "24c26ce64cb3474e25dac2715b186ef23f8e6b339d22af4091d65cac47c5408f",
+    "results_revision/models/T_M2values.joblib": "1f62cf4720caf6801626a5c01c05d371f22bea7d59642ce11a3abc05a98022a2",
+    "results_revision/models/T_M3a.joblib": "9125084e6e021d71b0338f18bab510b7b4ee1901d7fa9a1a3cb827d406e8e226",
+    "results_revision/models/T_M3anoESI.joblib": "826bff7489b32db22daa2ec946a91e2ab31df7b76cec578377f5eb03fa1d9565",
+    "results_revision/models/T_M3b.joblib": "6346e76266cf514c4c53b56343c559eb26f564a3b9fe3540be27f865fc806503",
+    "results_revision/models/T_M4.joblib": "7ba1fe347c8e609fa117c465a7aa1145df6c52cc77e4be0fe846ae326e054724",
+    "results_revision/preds/A_M0.parquet": "ae26dbecbbfbb4074b867d235f3b98aca3fd4bb74a5581291c2433cc211bb3ff",
+    "results_revision/preds/A_M1.parquet": "702503aad934e1382c4d936193b3d1a8bcc57098c9ad8402ff91d1b1c352c1ea",
+    "results_revision/preds/A_M1time.parquet": "c3a4a897a866a97324a6bf36fdc577d96bd0e8730a2e8b48ec21aa8b0c45ea9c",
+    "results_revision/preds/A_M2.parquet": "788bf596e19d49768aeefc1be38e688f9d3ea428e6773f1457dd79118a1d64dd",
+    "results_revision/preds/A_M2noESI.parquet": "3bf53edaae94fef774106ddcdc45b2b3d2658a010d95cf438fa07fedb087c3bb",
+    "results_revision/preds/A_M2values.parquet": "553c3bffe96d0c4b0a8b2e1f89018632e6a2df921654b31aaf09d4f4b5779ad6",
+    "results_revision/preds/A_M3a.parquet": "29c6d8620cd6f56492f3b46f46eaf23072f078eb1a53934f756508bce27aeb50",
+    "results_revision/preds/A_M3anoESI.parquet": "f6014fe51b47dcc118b543e0ad83656f8246c6a436fc7c566b4a31d70f5c9b0c",
+    "results_revision/preds/A_M3b.parquet": "dcec6a16935583a12ecd050dd59a74152ec613a043034d705d3f426283e06b61",
+    "results_revision/preds/A_M4.parquet": "f4904d34f718f4800881f27d08f4174515d00b948f794efc00115b3b38b22d63",
+    "results_revision/preds/G_M0.parquet": "66ecd62b2a869cc417fe5f0a18b3ecb141759a2c816a08df83bd291cfd222a86",
+    "results_revision/preds/G_M1.parquet": "115216ef8d07f91dc2e893a2f7b119023a74e488798de6f54f08fd7beb126f9a",
+    "results_revision/preds/G_M1time.parquet": "5a62cc3dac2e13c8dd56fb46620a4f8615e1eb4c1dbe9257f19e8bf1cb4b6af0",
+    "results_revision/preds/G_M2.parquet": "5f54d7c53179e2b178d62a9f58d21fba95a115402ccd93f409bc0ed5c713f8cb",
+    "results_revision/preds/G_M2noESI.parquet": "8248571a255f7c789cf36ec4bc1a56b984c849027898b57d84f5c28e2b84b4d7",
+    "results_revision/preds/G_M2values.parquet": "d52e72daa309be79369b8d947e8d30a4d4a7b385528ea9c0d83b77d1cc0944df",
+    "results_revision/preds/G_M3a.parquet": "19d0bd477c19fa3c1a41501f5e789eae652af3d3321b69eeb7dca56693c9ab25",
+    "results_revision/preds/G_M3anoESI.parquet": "3fd5100c9dc41b228a89ab779f5c2329a78e096e543f41d47b30778c40341fea",
+    "results_revision/preds/G_M3b.parquet": "19764de2c32e6913ecb954849b4e1265f2638285fd935cb582e25544bb94ae6d",
+    "results_revision/preds/G_M4.parquet": "92e8a4115ff8569a3549aa37f804553550bbe5b3c46a596df86ce5cf90b5975b",
+    "results_revision/preds/T_M0.parquet": "1f5e09e5efefa4d81333d9346e1ce7813a5cea80a7e8f1aa3716708cf5b861fe",
+    "results_revision/preds/T_M1.parquet": "a04597f2d842072ed69365c253b9c357a6c0c1478846d99b8c2273501e3fe2c2",
+    "results_revision/preds/T_M1time.parquet": "a77826165e8edeb867173e6319c62b29ec43e964efa510a52b98efaa91404711",
+    "results_revision/preds/T_M2.parquet": "0033a8081296179d5df7ee157f7f4be1c262bdccbfa99254352957ec5f69bb14",
+    "results_revision/preds/T_M2noESI.parquet": "1fd38afd23823f4e112954630f6a64c9b5e588df20c77e8d41013e4302817be0",
+    "results_revision/preds/T_M2values.parquet": "c28eb37d65da470f2349e36e1c395a120b00ab719b310a1e2e77a7009fe654ba",
+    "results_revision/preds/T_M3a.parquet": "01827fc07748a2c2c6e6697acd8caee2603e037005bfe396932e03af5d24d591",
+    "results_revision/preds/T_M3anoESI.parquet": "356c7de7b60a819c01b10c9caeee270226877d0ee578187169ceadbc10454e90",
+    "results_revision/preds/T_M3b.parquet": "da686bb2fb1ba50ff479c87815651605e9a2ac82060fbcd1cdf168ce7fad02c5",
+    "results_revision/preds/T_M4.parquet": "3b28e457c57964c8508bace9b1543c46dce0b971144fe410f5dfd0d5b5315529",
+    "results_revision/protocol.json": "9364b7fd31e48a1762bc63064450af833b5a87d64576623ecf9f928e9a179076",
+    "results_revision/runs/A_M0.json": "4226ee0e4c0e91d5a9471b34152535e6383c555d96b729a0b66d91371b807e6c",
+    "results_revision/runs/A_M1.json": "dfe93af4be93c19e7c9d2ff0a1f9ea34bb5488fb2d91ec21b349e418d108fd07",
+    "results_revision/runs/A_M1time.json": "39783a911ce1c18192c56241f4e12d5c2ec8bbdad840b2fe15bcb789874d58df",
+    "results_revision/runs/A_M2.json": "11331ec563a503c8dfe416d36a642ea30c276b70c0e978879e8a552db777c102",
+    "results_revision/runs/A_M2noESI.json": "ebf9930ee4df9236c8a9b74df915ae5023f570ff6cbb8e97c7883f4f2cfb72cf",
+    "results_revision/runs/A_M2values.json": "5c13d73a79e44e29d7f226632a29906a9d895c6a27f340cb8499dc1b0f03ff73",
+    "results_revision/runs/A_M3a.json": "9ac9b1cbec5f9ee3fcb8bc75875521e5426ec5ce08fa6cc966d480f793b45f01",
+    "results_revision/runs/A_M3anoESI.json": "ef1e1078934d403686035b7d52f0f5f4199af221329e78d1ee0fa97ac1c7abaf",
+    "results_revision/runs/A_M3b.json": "b305571695b9481fe258b863c4c71d3bbd329c04982361f86d0632d07dfaeaf6",
+    "results_revision/runs/A_M4.json": "2aad562b2a5b94e1cafbdb400e76032bb83c26c6ca38082f2fdf09faade647c4",
+    "results_revision/runs/G_M0.json": "bb4b14945e8ed7e761d2192931187062edd048291aefcae253ef367688ce66ac",
+    "results_revision/runs/G_M1.json": "4155e761abf5e3682951dde03d04d6feb797366ff37b61ec055129b6ef64d42d",
+    "results_revision/runs/G_M1time.json": "0b5797cf8f6ef4e71f34a40dd749116a4a7d2e94c7e2ae37b66aa91387698bfa",
+    "results_revision/runs/G_M2.json": "7cd73201f65690754f2931892dc52036e153e2f8158b8ca84518b586ba185f03",
+    "results_revision/runs/G_M2noESI.json": "166d94a4fde8151bb68b7557ae4665eac5456042bf5995dde8c87f58127ea49a",
+    "results_revision/runs/G_M2values.json": "92ac29606b0482ad938b89694be42612777d1da5d84e29985b607e6366e87727",
+    "results_revision/runs/G_M3a.json": "6dc63ccf2edcb96109779351501f238f86a91b97d9bc529d6c6ea2233c88f163",
+    "results_revision/runs/G_M3anoESI.json": "f5d54e99302f12571b8a299144ea7bfad0b4cca1ed63ff7e4d9cee0e2107e706",
+    "results_revision/runs/G_M3b.json": "5d99711a695fbb16458e62631eafefd12ed20410a5e237cc42ca1c9a63a94b3b",
+    "results_revision/runs/G_M4.json": "9c7d02dae1ec4bc0b78d43731f1ac9eb4af68539f9e666cf1f5fcbe463fa6232",
+    "results_revision/runs/T_M0.json": "52703dcf846135832c065744b579e20ba883b00f93d41a50ad56d2c2f56155ba",
+    "results_revision/runs/T_M1.json": "32a60f2baec5391dc5b6fe94fc875d2848af44c03af990ac12fb34751dad7d23",
+    "results_revision/runs/T_M1time.json": "6518663a9b2eda9e3f4fc64b50934550514f59c17747e3b15241cc556f952d87",
+    "results_revision/runs/T_M2.json": "3adf129af40ffb7210eddf175ed45745dae6d4445e446e158da8f1e1dbfc223a",
+    "results_revision/runs/T_M2noESI.json": "488159644aa5b8309a3bdaa825afe42fe1f3d14b8c6517f3e4b78d6ef769efda",
+    "results_revision/runs/T_M2values.json": "9ff680a6161a8f21c403e825852d9d1b2c98e971cab80857e093f6f8c546f4f7",
+    "results_revision/runs/T_M3a.json": "4f7719756fd805f1229f1aa36f60031d555ba6248a28a002cef5c16feb71cb8f",
+    "results_revision/runs/T_M3anoESI.json": "2ce85b260cae1be7d69f9c3252ce72c8dbd8cc42aaf30ecd5c768db30b47f29d",
+    "results_revision/runs/T_M3b.json": "d512db4ec5491f7b17be33a71ea450e0bbe1477a0c5c56e655d5fdc977da7c82",
+    "results_revision/runs/T_M4.json": "22eb3f5856006eb80277855a1bbdbf2ba7b37381bd54a4cd0d56d4ce2c500583",
+    "scripts/build_mcmed_embeddings.py": "93c8b2383e81311ac1605efbab2d6a7a8af3f1e0779d0b5ed8463bc31a11f51d",
+    "scripts/evaluate_mcmed_external.py": "fb2a22c7d19d6ed810cdc47b93e42958a156cc1d632467847f02a5bc1873d531",
+    "scripts/mcmed_external.py": "adcd22dbe56501d600547c841458b208a4dbbeceb6ff1fc8e0fbacb43fff7231",
+    "src/wjem_ed_revision/__init__.py": "f4259719dd022ec7e143d389e3385985d59613ac931437b2f1476c7708f300d9",
+    "src/wjem_ed_revision/data.py": "92de2d182fb604c0fa8c605cb1ecda5e10c6b47ff2c4fe7e65d0961839fb7bd2",
+    "src/wjem_ed_revision/evaluate.py": "56e84dc6331476e91d3885135428658eb581b3577e3cd2cbb4b2baf05b326adf",
+    "src/wjem_ed_revision/model.py": "18c5b0b84cfae75d282c8c66d72c23b72411addd43b3159bb4bb871c6a359fd3",
+    "src/wjem_ed_revision/report.py": "f059f664d22c059c192766ed7b76c9d9a48d4457ffd1b15a8d2b78b28c1ef308",
+    "src/wjem_ed_revision/run.py": "94caee59039e41ff812aeea720884343dfa9daefed935a6c489d7d4e902e1041",
+    "src/wjem_ed_v2/evaluate.py": "163a9312a32115dae33b8b123492b6205592f66cce4999b95049b97ae9df9151",
+    "src/wjem_ed_v2/models.py": "94eeffcc7fc12c8a78d3c7a3e2d802ca0116c2026133f2f3764fc14e8c5a5b16",
+    "src/wjem_ed_v2/text.py": "886118609cf692f4749d5bcf7a9cfae442bb0ebd6ef9573235738935ea161303"
+  },
+  "source_sha256": {
+    "scripts/esi3_discrimination_amendment.py": "ff59809b4841f9e7ba3007ebc8b8a2e183caabd3584e75920ef36d12ca744208",
+    "tests/test_esi3_discrimination_amendment.py": "54415a4c61066491bf4542118e5d42e1aed68d99ffa58b8bfaca85d9168ce0a8",
+    "src/wjem_ed_revision/evaluate.py": "56e84dc6331476e91d3885135428658eb581b3577e3cd2cbb4b2baf05b326adf",
+    "src/wjem_ed_v2/evaluate.py": "163a9312a32115dae33b8b123492b6205592f66cce4999b95049b97ae9df9151",
+    "scripts/audit_primary_text_provenance.py": "951b561951f0a114e2f31da730482c224ccb109dc3745e444337aa63b54a84be"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.1.0",
+    "pandas": "2.3.3",
+    "sklearn": "1.7.2"
+  }
+}
